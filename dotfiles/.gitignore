@@ -1,0 +1,6 @@
+backups/
+*.log
+.DS_Store
+.env
+.env.local
+oh-my-zsh/

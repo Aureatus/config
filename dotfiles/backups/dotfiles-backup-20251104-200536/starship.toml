@@ -1,6 +1,0 @@
-# Get editor completions from your shell with $starship completions
-# For a full list of prompts, see:
-# https://starship.rs/config/
-
-# Add a new line before the prompt
-add_newline = true
