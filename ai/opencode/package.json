@@ -4,7 +4,8 @@
   "description": "Shared OpenCode configuration and plugins",
   "type": "module",
   "devDependencies": {
-    "@opencode-ai/plugin": "1.0.120"
+    "@opencode-ai/plugin": "1.0.120",
+    "bun-types": "latest"
   },
   "scripts": {
     "check-types": "tsc --noEmit"

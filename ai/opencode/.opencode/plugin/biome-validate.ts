@@ -1,5 +1,5 @@
-import { existsSync, statSync } from "node:fs";
-import { basename } from "node:path";
+import { existsSync, statSync } from "fs";
+import { basename } from "path";
 import type { Plugin } from "@opencode-ai/plugin";
 
 const OUTPUT_MAX_LINES = 200;

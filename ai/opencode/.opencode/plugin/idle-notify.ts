@@ -1,4 +1,4 @@
-import { basename } from "node:path";
+import { basename } from "path";
 import type { Plugin } from "@opencode-ai/plugin";
 
 const NOTIFICATION_EXPIRE_MS = 10_000;
