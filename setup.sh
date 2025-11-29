@@ -36,8 +36,21 @@ case "$COMPONENT" in
     ;;
     
   "dotfiles")
-    echo "Dotfiles configuration not yet implemented"
-    exit 1
+    echo "Setting up dotfiles configuration..."
+    
+    if [ -d "$HOME/dev/config/dotfiles" ]; then
+        echo "Dotfiles already exist. Updating..."
+        cd "$HOME/dev/config/dotfiles"
+        git pull origin main
+    else
+        echo "Cloning configuration repository..."
+        mkdir -p "$HOME/dev"
+        git clone "$CONFIG_REPO" "$HOME/dev/config"
+    fi
+    
+    echo "Running dotfiles installation..."
+    cd "$HOME/dev/config/dotfiles"
+    ./manage.sh install
     ;;
     
   "help"|"-h"|"--help")
@@ -45,12 +58,13 @@ case "$COMPONENT" in
     echo ""
     echo "Available components:"
     echo "  opencode     OpenCode AI assistant configuration"
-    echo "  dotfiles     System shell and tool configurations (future)"
+    echo "  dotfiles     System shell and tool configurations"
     echo "  help         Show this help message"
     echo ""
     echo "Examples:"
     echo "  $0 opencode ./my-project"
     echo "  $0 opencode"
+    echo "  $0 dotfiles"
     exit 0
     ;;
     
