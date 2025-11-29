@@ -201,7 +201,7 @@
     "playwright": {
       "type": "local",
       "command": [
-        "npx",
+        "bunx",
         "@playwright/mcp@latest",
         "--headless",
         "--save-trace",
@@ -213,7 +213,7 @@
     "exa": {
       "type": "local",
       "enabled": true,
-      "command": ["npx", "mcp-remote", "https://mcp.exa.ai/mcp"]
+      "command": ["bunx", "mcp-remote", "https://mcp.exa.ai/mcp"]
     }
   },
   "permission": {
