@@ -198,10 +198,22 @@
     }
   },
   "mcp": {
+    "playwright": {
+      "type": "local",
+      "command": [
+        "npx",
+        "@playwright/mcp@latest",
+        "--headless",
+        "--save-trace",
+        "--save-video=1280x720",
+        "--output-dir=./playwright-mcp-output"
+      ],
+      "enabled": true
+    },
     "exa": {
       "type": "local",
       "enabled": true,
-      "command": ["bunx", "mcp-remote", "https://mcp.exa.ai/mcp"]
+      "command": ["npx", "mcp-remote", "https://mcp.exa.ai/mcp"]
     }
   },
   "permission": {

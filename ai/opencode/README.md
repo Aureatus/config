@@ -29,6 +29,7 @@ This is part of a larger `config/` repository structure that includes:
 The `opencode.json` file includes:
 
 - **OpenAI Codex Authentication** with multiple model variants
+- **Playwright MCP** for browser automation and testing
 - **Exa MCP** for web search capabilities
 - **Permission settings** for external directory access
 
@@ -38,6 +39,21 @@ The `opencode.json` file includes:
 - `gpt-5.1-codex-max-*` - Enhanced codex models with larger context
 - `gpt-5.1-codex-mini-*` - Lightweight codex models
 - `gpt-5.1-*` - Standard GPT-5.1 models
+
+## MCP (Model Context Protocol) Servers
+
+### Playwright
+Browser automation and testing capabilities:
+- **Headless browser control** for web scraping and testing
+- **Video recording** (1280x720) for debugging
+- **Trace collection** for performance analysis
+- **Output directory**: `./playwright-mcp-output`
+
+### Exa
+Web search and content retrieval:
+- **Real-time web search** with up-to-date information
+- **Content extraction** from specific URLs
+- **Configurable result counts** and search depth
 
 ## Plugins
 
