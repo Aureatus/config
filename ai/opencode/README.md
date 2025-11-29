@@ -89,29 +89,38 @@ The Biome linting supports: JavaScript, TypeScript, JSX, TSX, Vue, Svelte, Astro
 - `biome` linter (installed via bunx)
 - `notify-send` and `paplay` for error notifications (Linux)
 
-### Plugin Configuration
+### Plugin Usage
 
-To use these plugins, update your `opencode.json`:
+Plugins in `.opencode/plugin/` are automatically loaded by OpenCode. To use them:
 
-```json
-{
-  "plugin": [
-    "opencode-openai-codex-auth@4.0.2",
-    "./.opencode/plugin/idle-notify.ts",
-    "./.opencode/plugin/biome-validate.ts"
-  ]
-}
-```
+1. **Copy plugins** you need from this config repo to your project:
+   ```bash
+   # Copy just notification plugin
+   cp .opencode/plugin/idle-notify.ts my-project/.opencode/plugin/
+   
+   # Or copy both
+   cp .opencode/plugin/*.ts my-project/.opencode/plugin/
+   ```
 
-Or use just one:
+2. **Customize** each plugin for your project's specific needs
 
-```json
-{
-  "plugin": [
-    "opencode-openai-codex-auth@4.0.2",
-    "./.opencode/plugin/idle-notify.ts"
-  ]
-}
+3. **No plugin configuration needed** in `opencode.json` - they're auto-discovered
+
+#### Example Project Setup
+
+```bash
+# Start new project
+mkdir my-project && cd my-project
+
+# Copy base config
+cp ~/dev/config/ai/opencode/opencode.json .
+
+# Copy desired plugins
+mkdir -p .opencode/plugin
+cp ~/dev/config/ai/opencode/.opencode/plugin/idle-notify.ts .opencode/plugin/
+
+# Customize as needed for your project
+# vim .opencode/plugin/idle-notify.ts
 ```
 
 ## Usage
