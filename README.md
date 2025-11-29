@@ -1,77 +1,58 @@
-# OpenCode Configuration
+# Development Configuration
 
-A shared OpenCode configuration repository that can be easily pulled into new projects.
+Centralized repository for all development tool configurations and dotfiles.
 
-## Setup
+## Structure
 
-1. Clone this repository into your project:
-   ```bash
-   git clone https://github.com/yourusername/opencode-config.git .opencode
-   ```
+```
+config/
+├── ai/
+│   └── opencode/          # OpenCode AI assistant configurations
+├── dotfiles/              # System shell and tool configurations (future)
+├── editors/               # Editor-specific configurations (future)
+└── development/           # Other development tool configs (future)
+```
 
-2. Or add as a submodule:
-   ```bash
-   git submodule add https://github.com/yourusername/opencode-config.git .opencode
-   ```
+## Quick Start
 
-3. Copy the configuration file to your project root:
-   ```bash
-   cp .opencode/opencode.json .
-   ```
+### OpenCode Configuration
 
-## Configuration
+To set up OpenCode in a new project:
 
-The `opencode.json` file includes:
+```bash
+# Clone this repository
+git clone https://github.com/yourusername/config.git .opencode
 
-- **OpenAI Codex Authentication** with multiple model variants
-- **Exa MCP** for web search capabilities
-- **Permission settings** for external directory access
+# Use the setup script
+cd .opencode/ai/opencode
+./setup.sh /path/to/your/project
+```
 
-### Available Models
+Or directly:
+```bash
+curl -s https://raw.githubusercontent.com/yourusername/config/main/ai/opencode/setup.sh | bash -s /path/to/your/project
+```
 
-- `gpt-5.1-codex-low/medium/high` - Standard codex models
-- `gpt-5.1-codex-max-*` - Enhanced codex models with larger context
-- `gpt-5.1-codex-mini-*` - Lightweight codex models
-- `gpt-5.1-*` - Standard GPT-5.1 models
+## Components
 
-## Plugins
+### AI/OpenCode
+- **Configuration**: Complete OpenAI Codex setup with multiple model variants
+- **Plugins**: Idle validation, linting, and type checking automation
+- **MCP Integration**: Exa search and other Model Context Protocol tools
 
-### idle-validate
+### Future Components
+- **dotfiles**: Shell configurations (zsh, starship, etc.)
+- **editors**: VSCode, Neovim, and other editor settings
+- **development**: Docker, Git, and other dev tool configurations
 
-Automatically runs validation checks when the session becomes idle:
+## Contributing
 
-- **Biome linting** for supported file types
-- **TypeScript type checking** via `bun run check-types`
-- **Desktop notifications** for idle state and failures
-- **Sound alerts** using system notification sounds
+Each component is maintained independently but follows the same structure:
+- `README.md` with usage instructions
+- `setup.sh` for easy installation
+- Configuration files and plugins
+- Documentation for customization
 
-#### Supported File Types
+## License
 
-The Biome linting supports: JavaScript, TypeScript, JSX, TSX, Vue, Svelte, Astro, JSON, CSS, SCSS, Markdown
-
-#### Requirements
-
-- Git repository
-- `bun` package manager
-- `biome` linter (installed via bunx)
-- `notify-send` and `paplay` for notifications (Linux)
-
-## Usage
-
-Once configured, OpenCode will automatically:
-
-1. Use the specified model and settings
-2. Load the idle-validate plugin
-3. Run validation checks when idle
-4. Notify you of any issues that need attention
-
-## Customization
-
-You can modify the `opencode.json` file to:
-
-- Change the default model
-- Add/remove MCP servers
-- Adjust plugin settings
-- Modify permission preferences
-
-For project-specific customizations, consider maintaining a separate `opencode.json` in your project root that extends this base configuration.
+MIT License - see LICENSE file for details.
