@@ -57,14 +57,26 @@ Web search and content retrieval:
 
 ## Plugins
 
-### idle-validate
+### idle-notify
 
-Automatically runs validation checks when the session becomes idle:
+Simple idle notification plugin that provides desktop and audio alerts when the session becomes idle:
+
+- **Desktop notifications** for idle state
+- **Sound alerts** using system notification sounds
+- **Lightweight** - no validation checks, just notifications
+
+#### Requirements
+
+- `notify-send` and `paplay` for notifications (Linux)
+
+### biome-validate
+
+Code validation plugin that runs checks when the session becomes idle:
 
 - **Biome linting** for supported file types
 - **TypeScript type checking** via `bun run check-types`
-- **Desktop notifications** for idle state and failures
-- **Sound alerts** using system notification sounds
+- **Error reporting** with detailed output for failures
+- **Only runs on changed files** for efficiency
 
 #### Supported File Types
 
@@ -75,16 +87,41 @@ The Biome linting supports: JavaScript, TypeScript, JSX, TSX, Vue, Svelte, Astro
 - Git repository
 - `bun` package manager
 - `biome` linter (installed via bunx)
-- `notify-send` and `paplay` for notifications (Linux)
+- `notify-send` and `paplay` for error notifications (Linux)
+
+### Plugin Configuration
+
+To use these plugins, update your `opencode.json`:
+
+```json
+{
+  "plugin": [
+    "opencode-openai-codex-auth@4.0.2",
+    "./.opencode/plugin/idle-notify.ts",
+    "./.opencode/plugin/biome-validate.ts"
+  ]
+}
+```
+
+Or use just one:
+
+```json
+{
+  "plugin": [
+    "opencode-openai-codex-auth@4.0.2",
+    "./.opencode/plugin/idle-notify.ts"
+  ]
+}
+```
 
 ## Usage
 
 Once configured, OpenCode will automatically:
 
-1. Use the specified model and settings
-2. Load the idle-validate plugin
-3. Run validation checks when idle
-4. Notify you of any issues that need attention
+1. Use specified model and settings
+2. Load the configured plugins
+3. Run validation checks (if using biome-validate) when idle
+4. Notify you of idle state and any issues that need attention
 
 ## Customization
 
