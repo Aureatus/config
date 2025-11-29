@@ -1,0 +1,12 @@
+{
+  "name": "opencode-config",
+  "version": "1.0.0",
+  "description": "Shared OpenCode configuration and plugins",
+  "type": "module",
+  "devDependencies": {
+    "@opencode-ai/plugin": "^4.0.0"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  }
+}
