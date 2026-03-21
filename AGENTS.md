@@ -46,6 +46,8 @@ System shell and CLI tool configurations:
 - **Starship**: Clean, informative prompt configuration
 - **CLI Tools**: eza, bat, fd, ripgrep, fzf setup
 - **Terminal Setup**: JetBrains Mono Nerd Font and configurations
+- **Source of Truth**: `dotfiles/` in this repository is the canonical dotfiles location
+- **Plugin Model**: `.zshrc` enables plugins and `manage.sh install` fetches third-party Oh My Zsh plugin dependencies
 
 **Usage**: Run `./manage.sh install` on new systems
 
@@ -96,7 +98,7 @@ This provides:
 
 - **Source of Truth**: `ai/opencode/opencode.json` (linked via symlink)
 - **Plugin Templates**: `ai/opencode/.opencode/plugin/`
-- **System Config**: `dotfiles/`
+- **System Config**: `dotfiles/` is the canonical dotfiles source of truth
 - **Documentation**: Each component has its own README
 
 ## Contributing

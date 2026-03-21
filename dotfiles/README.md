@@ -27,11 +27,25 @@ cd ~/dev/config/dotfiles
 ./manage.sh install   # Full setup on new system
 ```
 
+## Source of Truth
+
+This directory is the canonical home for these dotfiles.
+
+- Edit and reference `~/dev/config/dotfiles`
+- Do not maintain a separate standalone `~/dev/dotfiles` repo copy
+
+## Plugin Management
+
+- `./manage.sh install` installs the third-party Oh My Zsh plugins needed by `.zshrc`
+- `.zshrc` is the source of truth for which plugins are enabled in the shell
+- Downloaded plugin repos under `custom/plugins/` are treated as install-time dependencies and are gitignored
+- If custom plugin code is added later, it can be tracked explicitly at that time
+
 ## Files
 
 - `.zshrc` - Zsh configuration
 - `starship.toml` - Starship prompt config
-- `custom/` - Oh My Zsh custom plugins
+- `custom/` - Oh My Zsh custom config and plugin templates
 
 ## Setup New Machine
 
