@@ -7,9 +7,12 @@ Use this prompt fragment when deciding what to test, how to verify a change, or 
 - Test for risk, behavior, and confidence in change rather than chasing coverage as a vanity metric.
 - Put the most weight on user-critical flows, business invariants, important boundaries, and recovery from failure.
 - Prefer tests that catch meaningful regressions over tests that mirror implementation details too closely.
+- Prefer end-to-end tests for full user flows over over-optimizing for narrow unit coverage.
 - Use unit tests for deterministic logic with clear inputs and outputs.
 - Use integration tests when contracts, orchestration, or system boundaries matter.
 - Use end-to-end tests for the small set of flows that must work from a user's point of view.
+- Prefer real integrations, local infra, and separate test databases over mocks whenever practical.
+- Mock only true external boundaries that cannot be exercised realistically, safely, or affordably in tests.
 - Prefer integration coverage over mock-heavy unit tests when real behavior is affordable to exercise.
 - Derive test cases from authoritative contracts, domain rules, invariants, and user-critical actions.
 - When behavior is declarative or generated from a source of truth, test the definition plus the critical derived outcomes rather than duplicating the whole system by hand in tests.
@@ -25,7 +28,9 @@ Use this prompt fragment when deciding what to test, how to verify a change, or 
 ## Avoid
 
 - Do not optimize for raw coverage if it produces weak confidence.
+- Do not mock code you own or infrastructure you can run locally just for convenience.
 - Do not overuse mocks where exercising real integration behavior is practical.
+- Do not let narrow low-level tests crowd out full user-flow coverage.
 - Do not accept flaky tests as normal background noise.
 - Do not let snapshot sprawl replace thoughtful assertions.
 - Do not claim a change is complete without verifying the behaviors that matter most.
