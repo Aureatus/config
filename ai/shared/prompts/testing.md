@@ -11,6 +11,8 @@ Use this prompt fragment when deciding what to test, how to verify a change, or 
 - Use integration tests when contracts, orchestration, or system boundaries matter.
 - Use end-to-end tests for the small set of flows that must work from a user's point of view.
 - Prefer integration coverage over mock-heavy unit tests when real behavior is affordable to exercise.
+- Derive test cases from authoritative contracts, domain rules, invariants, and user-critical actions.
+- When behavior is declarative or generated from a source of truth, test the definition plus the critical derived outcomes rather than duplicating the whole system by hand in tests.
 - Keep tests deterministic, readable, and trustworthy.
 - Eliminate flaky timing assumptions, incidental assertions, and brittle setup whenever possible.
 - Test unhappy paths, partial failures, and recovery behavior when they materially affect the product.
@@ -27,3 +29,4 @@ Use this prompt fragment when deciding what to test, how to verify a change, or 
 - Do not accept flaky tests as normal background noise.
 - Do not let snapshot sprawl replace thoughtful assertions.
 - Do not claim a change is complete without verifying the behaviors that matter most.
+- Do not duplicate the full implementation logic inside tests when the real source of truth can be exercised directly.

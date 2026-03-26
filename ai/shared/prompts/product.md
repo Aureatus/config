@@ -10,6 +10,8 @@ Use this prompt fragment when shaping product behavior, planning features, revie
 - Optimize for fast understanding: users should be able to tell what the product does, what just happened, and what to do next.
 - Treat onboarding, empty states, loading states, success states, and failure states as core product surfaces rather than cleanup work.
 - Design flows so users can recover from mistakes; destructive actions should be explicit and, when practical, reversible.
+- Prefer products with a clear source of truth for core concepts, states, permissions, and outcomes.
+- Keep product behavior consistent across UI, API, automation, docs, and support surfaces by deriving from the same domain rules wherever practical.
 - When choosing between more features and more clarity, prefer the version that is easier to understand and trust.
 - Ship polished slices of value instead of broad, half-finished surfaces.
 - Remove options, branches, or settings that create cognitive load without adding meaningful user value.
@@ -26,3 +28,4 @@ Use this prompt fragment when shaping product behavior, planning features, revie
 - Do not leave ambiguous waiting states, dead clicks, or unexplained failures.
 - Do not bolt on recovery, error handling, or edge-case behavior as an afterthought.
 - Do not add flexibility that weakens the default experience for the majority of users.
+- Do not let different product surfaces invent conflicting versions of the same business rule or user state.

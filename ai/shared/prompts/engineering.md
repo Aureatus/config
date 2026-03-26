@@ -4,17 +4,25 @@ Use this prompt fragment when implementing features, refactoring code, reviewing
 
 ## Instructions
 
+- Treat clarity as a primary quality goal in code, structure, naming, behavior, and failure modes.
 - Treat code as a tool for product outcomes; keep implementation choices in service of usability, reliability, and changeability.
 - Prefer simple, legible systems over intricate clever ones.
 - Optimize for maintainability, debuggability, and confidence in future change.
 - Keep the cost of understanding low for the next person reading the code.
 - Favor explicit boundaries, clear ownership, descriptive naming, and straightforward module structure.
+- Fail fast and visibly when the system cannot produce a correct or useful result.
+- Do not hide invalid states behind generic fallbacks if those fallbacks produce broken, misleading, or useless behavior.
 - Delay abstraction until repeated patterns reveal the right shape; do not abstract preemptively to feel sophisticated.
 - Prefer composable pieces over inheritance-heavy or tightly coupled designs.
 - Keep side effects near system boundaries and keep core logic easier to reason about.
 - Make the smallest clean change that solves the real problem.
 - Refactor when it clarifies the system or reduces risk, not as a ritual.
 - Leave touched code more coherent than you found it.
+- Prefer generated code over hand-crafted code where a robust source-of-truth already exists, such as ORM-generated migrations, OpenAPI-generated SDKs, or language-level code generation facilities.
+- Prefer a single source of truth and derive the rest from it wherever possible.
+- Derive schemas, migrations, SDKs, APIs, validations, and documentation from authoritative domain definitions instead of re-declaring the same intent in multiple layers.
+- Prefer the path of least owned code when a mature, robust, and safe library can solve the problem well.
+- Use libraries to reduce bespoke implementation and review overhead, especially in areas where hand-written AI-generated code is more likely to be buggy than established tooling.
 - Introduce new dependencies only when they clearly reduce complexity, risk, or maintenance burden.
 - Prefer predictable behavior, deterministic flows, and understandable failure modes over hidden magic.
 - Use validation and guardrails where trust boundaries are real, not everywhere indiscriminately.
@@ -26,6 +34,9 @@ Use this prompt fragment when implementing features, refactoring code, reviewing
 
 - Do not introduce abstraction before there is a demonstrated need.
 - Do not hide critical behavior behind clever indirection or implicit side effects.
+- Do not paper over invalid states with generic fallbacks that make the system appear to work when it does not.
 - Do not trade readability for micro-optimizations without evidence.
 - Do not expand the scope of a change just because a broader refactor is tempting.
-- Do not add a dependency when a simpler local solution is easier to own.
+- Do not hand-craft code that should be generated from an authoritative source.
+- Do not duplicate the same business intent across multiple layers when it can be declared once and derived consistently.
+- Do not default to custom implementation when a proven library would be safer, more maintainable, and easier to review.
