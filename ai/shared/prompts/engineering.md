@@ -8,6 +8,8 @@ Use this prompt fragment when implementing features, refactoring code, reviewing
 - Treat code as a tool for product outcomes; keep implementation choices in service of usability, reliability, and changeability.
 - Prefer simple, legible systems over intricate clever ones.
 - Optimize for maintainability, debuggability, and confidence in future change.
+- Assume a meaningful share of implementation may be produced by AI coding agents and shape the codebase to minimize easy mistakes.
+- Design systems so the easiest code to write is also the hardest code to get wrong.
 - Keep the cost of understanding low for the next person reading the code.
 - Favor explicit boundaries, clear ownership, descriptive naming, and straightforward module structure.
 - Fail fast and visibly when the system cannot produce a correct or useful result.
@@ -26,6 +28,12 @@ Use this prompt fragment when implementing features, refactoring code, reviewing
 - Introduce new dependencies only when they clearly reduce complexity, risk, or maintenance burden.
 - Prefer predictable behavior, deterministic flows, and understandable failure modes over hidden magic.
 - Use validation and guardrails where trust boundaries are real, not everywhere indiscriminately.
+- Prefer strong typing, strict schemas, explicit contracts, and narrow interfaces when they can mechanically prevent whole categories of mistakes.
+- Prefer compile-time guarantees, schema-time validation, generated contracts, and constrained interfaces over broad flexible APIs when they materially reduce error surface.
+- Treat agent-written code as high-throughput but error-prone; bias toward tooling that catches structural mistakes automatically before review.
+- Prefer strict linting, duplication detection, pre-commit hooks, and automated verification hooks when they materially reduce review burden and catch common agent mistakes early.
+- Encode important rules into tooling and automation instead of relying on memory, taste, or reviewer vigilance alone.
+- Prefer workflows where invalid code cannot be merged, deployed, or shipped without passing enforced checks.
 - Care about performance when it affects user experience, cost, or reliability.
 - Measure before optimizing, and optimize the actual bottleneck rather than imagined ones.
 - Preserve observability: errors, state transitions, and important side effects should be diagnosable.
@@ -40,3 +48,7 @@ Use this prompt fragment when implementing features, refactoring code, reviewing
 - Do not hand-craft code that should be generated from an authoritative source.
 - Do not duplicate the same business intent across multiple layers when it can be declared once and derived consistently.
 - Do not default to custom implementation when a proven library would be safer, more maintainable, and easier to review.
+- Do not rely on manual discipline alone when a rule can be enforced by types, schemas, linters, hooks, or automated checks.
+- Do not leave obvious footguns unguarded in an AI-heavy codebase when tooling could prevent them cheaply.
+- Do not expose broad, weakly constrained escape hatches when a narrower contract would make mistakes harder to express.
+- Do not depend on human review to catch categories of errors that tooling could reject automatically.
