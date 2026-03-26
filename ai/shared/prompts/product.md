@@ -12,6 +12,8 @@ Use this prompt fragment when shaping product behavior, planning features, revie
 - Design flows so users can recover from mistakes; destructive actions should be explicit and, when practical, reversible.
 - Prefer products with a clear source of truth for core concepts, states, permissions, and outcomes.
 - Keep product behavior consistent across UI, API, automation, docs, and support surfaces by deriving from the same domain rules wherever practical.
+- Make important state, permissions, constraints, and consequences legible to users instead of burying them in edge cases or support docs.
+- If a fallback cannot preserve a valid and useful experience, prefer a clear limitation or failure over a misleading degraded path.
 - When choosing between more features and more clarity, prefer the version that is easier to understand and trust.
 - Ship polished slices of value instead of broad, half-finished surfaces.
 - Remove options, branches, or settings that create cognitive load without adding meaningful user value.
@@ -29,3 +31,4 @@ Use this prompt fragment when shaping product behavior, planning features, revie
 - Do not bolt on recovery, error handling, or edge-case behavior as an afterthought.
 - Do not add flexibility that weakens the default experience for the majority of users.
 - Do not let different product surfaces invent conflicting versions of the same business rule or user state.
+- Do not let the product imply something worked, is available, or is saved when the underlying system state says otherwise.
