@@ -1,0 +1,15 @@
+{
+  "name": "opencode-template",
+  "private": true,
+  "version": "1.0.0",
+  "description": "OpenCode project template and plugin helpers",
+  "type": "module",
+  "devDependencies": {
+    "@opencode-ai/plugin": "1.0.120",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.9.2"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  }
+}

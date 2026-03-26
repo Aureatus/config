@@ -11,7 +11,8 @@
     "types": ["node"]
   },
   "include": [
-    ".opencode/plugin/**/*.ts"
+    ".opencode/plugin/**/*.ts",
+    "../../shared/skills/**/*.ts"
   ],
   "exclude": [
     "node_modules"

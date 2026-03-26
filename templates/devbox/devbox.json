@@ -1,0 +1,21 @@
+{
+  "packages": [
+    "jq@latest",
+    "ripgrep@latest"
+  ],
+  "env": {
+    "PROJECT_ROOT": "$PWD"
+  },
+  "shell": {
+    "init_hook": [
+      "echo 'Project devbox shell ready.'"
+    ],
+    "scripts": {
+      "shell-info": [
+        "pwd",
+        "echo $PROJECT_ROOT"
+      ],
+      "tool-versions": "mise ls"
+    }
+  }
+}

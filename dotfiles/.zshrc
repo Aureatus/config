@@ -82,6 +82,11 @@ source $ZSH/oh-my-zsh.sh
 # Starship prompt
 eval "$(starship init zsh)"
 
+# mise runtime activation
+if command -v mise >/dev/null 2>&1; then
+    eval "$(mise activate zsh)"
+fi
+
 # User configuration
 
 # Better history

@@ -1,0 +1,21 @@
+# Curated base packages for Pop!_OS / Ubuntu / Debian.
+# Keep this list readable and focused on the bootstrap set you want on every machine.
+
+bat
+build-essential
+ca-certificates
+curl
+eza
+fd-find
+flatpak
+fontconfig
+fzf
+gh
+git
+jq
+libnotify-bin
+pulseaudio-utils
+ripgrep
+unzip
+xz-utils
+zsh

@@ -1,0 +1,21 @@
+{
+  "packages": [
+    "jq@latest",
+    "shellcheck@latest",
+    "shfmt@latest"
+  ],
+  "env": {
+    "CONFIG_REPO_ROOT": "$PWD"
+  },
+  "shell": {
+    "init_hook": [
+      "echo 'Config repo devbox shell ready.'",
+      "echo 'Run `devbox run help` to see the available repo helpers.'"
+    ],
+    "scripts": {
+      "help": "./setup.sh help",
+      "capture": "./setup.sh capture",
+      "test-portable-env": "./system/scripts/test-portable-env.sh"
+    }
+  }
+}
