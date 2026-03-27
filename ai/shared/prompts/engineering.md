@@ -31,9 +31,6 @@ Use this prompt fragment when implementing features, refactoring code, reviewing
 - Prefer strong typing, strict schemas, explicit contracts, and narrow interfaces when they can mechanically prevent whole categories of mistakes.
 - Prefer compile-time guarantees, schema-time validation, generated contracts, and constrained interfaces over broad flexible APIs when they materially reduce error surface.
 - Treat agent-written code as high-throughput but error-prone; bias toward tooling that catches structural mistakes automatically before review.
-- Prefer strict linting, duplication detection, pre-commit hooks, and automated verification hooks when they materially reduce review burden and catch common agent mistakes early.
-- Encode important rules into tooling and automation instead of relying on memory, taste, or reviewer vigilance alone.
-- Prefer workflows where invalid code cannot be merged, deployed, or shipped without passing enforced checks.
 - Care about performance when it affects user experience, cost, or reliability.
 - Measure before optimizing, and optimize the actual bottleneck rather than imagined ones.
 - Preserve observability: errors, state transitions, and important side effects should be diagnosable.

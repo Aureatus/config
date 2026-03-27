@@ -17,7 +17,6 @@ Use this prompt fragment when deciding what to test, how to verify a change, or 
 - Derive test cases from authoritative contracts, domain rules, invariants, and user-critical actions.
 - When behavior is declarative or generated from a source of truth, test the definition plus the critical derived outcomes rather than duplicating the whole system by hand in tests.
 - Keep tests deterministic, readable, and trustworthy.
-- Prefer verification that runs by default through local tooling, CI, hooks, or agent automation rather than checks that depend on someone remembering to run them.
 - Guard critical user flows and invariants with mandatory automated verification, not optional spot checks.
 - If a check repeatedly catches meaningful regressions, promote it into the default toolchain, hook chain, or CI path.
 - Optimize test architecture for regression prevention in AI-authored code, not just for local developer reassurance.
@@ -39,6 +38,4 @@ Use this prompt fragment when deciding what to test, how to verify a change, or 
 - Do not let snapshot sprawl replace thoughtful assertions.
 - Do not claim a change is complete without verifying the behaviors that matter most.
 - Do not duplicate the full implementation logic inside tests when the real source of truth can be exercised directly.
-- Do not make important verification optional if it can be automated cheaply and reliably.
 - Do not rely on ad hoc manual checking for critical flows when automated coverage is feasible.
-- Do not keep high-value verification steps as tribal knowledge instead of wiring them into the default path.

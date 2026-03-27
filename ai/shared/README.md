@@ -17,6 +17,7 @@ shared/
 │   ├── product.md
 │   ├── engineering.md
 │   ├── design.md
+│   ├── developer-operability.md
 │   └── testing.md
 ├── skills/
 │   ├── manifest.ts
@@ -41,6 +42,7 @@ Current prompt fragments:
 - `product.md` - product behavior, prioritization, defaults, and scope tradeoffs
 - `engineering.md` - implementation quality, architecture bias, maintainability, and change strategy
 - `design.md` - interaction quality, hierarchy, visual direction, and accessibility
+- `developer-operability.md` - internal tooling, scriptability, observability, and agent-friendly development workflows
 - `testing.md` - verification posture, test strategy, and confidence in change
 
 ## Skills
