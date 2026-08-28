@@ -16,7 +16,32 @@ Use this repo for the host-level minimum:
 
 Keep this layer small and boring.
 
-### 2. Toolchain Portability
+### 2. Shared Machine Configuration
+
+Use Ansible as the main shared config layer across:
+
+- local desktops
+- local VMs
+- mini PCs
+- remote VPS hosts
+
+That gives you one real configuration system instead of trying to stretch Bash into a full machine-management tool.
+
+Keep Bash as a thin wrapper for:
+
+- bootstrapping Ansible itself
+- convenience commands
+- small repo-specific glue
+
+TypeScript can still make sense for:
+
+- generating config files
+- validating repo-specific metadata
+- composing higher-level wrappers
+
+But it is usually the wrong tool for primary machine configuration.
+
+### 3. Toolchain Portability
 
 Use `mise` for language runtimes and common CLIs so the same pinned versions can be restored on:
 
@@ -27,9 +52,9 @@ Use `mise` for language runtimes and common CLIs so the same pinned versions can
 
 That gives you much of the practical portability people often reach for Nix to get, without taking on the full Nix ecosystem immediately.
 
-Track those pins in repo-managed `mise.toml` files and update them intentionally.
+Track those pins in repo-managed `mise.toml` files and update them intentionally. Keep a tiny system Python only for bootstrap tools like Ansible.
 
-### 3. Portable Shells
+### 4. Portable Shells
 
 Use `devbox` for the optional portable shell layer:
 
@@ -37,13 +62,26 @@ Use `devbox` for the optional portable shell layer:
 - reproducible shell dependencies that are awkward to install manually everywhere
 - a copyable starter for future repos
 
-Keep `devbox` additive:
+Keep `devbox` additive and optional:
 
 - `mise` owns runtime versions
 - `devbox` owns the shell wrapper and local helper surface
 - host bootstrap still stays thin
 
-## 4. Service Portability
+If `mise` already covers the repo well enough, skip `devbox` and keep the stack simpler.
+
+## 5. First Boot And Provisioning
+
+Use `cloud-init` for the first-boot layer on VPS or cloud-image based hosts.
+
+- create the user
+- install Python and a tiny base package set
+- add SSH keys
+- make the machine reachable and ready for Ansible
+
+Then use Ansible for the long-lived config.
+
+## 6. Service Portability
 
 For anything that should move between machines, prefer repo-managed service definitions:
 
@@ -54,7 +92,7 @@ For anything that should move between machines, prefer repo-managed service defi
 
 If a workload runs in Compose locally, it is much easier to lift onto a VPS later.
 
-## 5. Secrets and State
+## 7. Secrets and State
 
 Do not bake secrets into the repo.
 
@@ -68,9 +106,11 @@ Nix is powerful, but it asks you to adopt a new package model, new language, and
 
 For your current goal, a lighter path is usually enough:
 
-- shell scripts for machine bootstrap
+- thin shell scripts for bootstrap glue
+- Ansible for shared machine config
+- cloud-init for first boot on remote hosts
 - `mise` for pinned tool versions
-- `devbox` for repo-local portable shells
+- optional `devbox` only where `mise` is not enough
 - containers for portable services
 - backups for irreplaceable state
 
@@ -81,5 +121,4 @@ You can always adopt Nix later for one layer at a time once the shape of the sta
 ## Good Next Additions
 
 - add `services/` or project-local Compose files for VPS-bound workloads
-- add `system/cloud-init/` if you start provisioning VPS instances often
 - add backup scripts for project data directories or databases when those become critical

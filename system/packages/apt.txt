@@ -1,6 +1,7 @@
 # Curated base packages for Pop!_OS / Ubuntu / Debian.
 # Keep this list readable and focused on the bootstrap set you want on every machine.
 
+ansible-core
 bat
 build-essential
 ca-certificates
@@ -14,7 +15,9 @@ gh
 git
 jq
 libnotify-bin
+ncurses-term
 pulseaudio-utils
+python3-apt
 ripgrep
 unzip
 xz-utils

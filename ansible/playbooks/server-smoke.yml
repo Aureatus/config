@@ -1,0 +1,15 @@
+---
+- name: Run fast smoke test config on a local VM
+  hosts: local
+  gather_facts: true
+  vars:
+    config_repo_root: "{{ playbook_dir }}/../.."
+    config_user_home: "{{ ansible_env.HOME }}"
+    config_install_packages: false
+    config_install_flatpak_apps: false
+    config_install_devbox: false
+    config_install_mise_runtimes: false
+    config_set_default_shell: false
+  roles:
+    - user-config
+    - runtime

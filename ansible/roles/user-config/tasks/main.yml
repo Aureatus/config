@@ -1,0 +1,68 @@
+---
+- name: Ensure user config directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "{{ config_user_home }}/.config"
+    - "{{ config_user_home }}/.config/mise"
+    - "{{ config_user_home }}/.local/bin"
+
+- name: Install Oh My Zsh
+  ansible.builtin.git:
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    dest: "{{ config_user_home }}/.oh-my-zsh"
+    version: master
+
+- name: Ensure Oh My Zsh custom directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "{{ config_user_home }}/.oh-my-zsh/custom"
+    - "{{ config_user_home }}/.oh-my-zsh/custom/plugins"
+
+- name: Install Oh My Zsh plugins
+  ansible.builtin.git:
+    repo: "{{ item.repo }}"
+    dest: "{{ config_user_home }}/.oh-my-zsh/custom/plugins/{{ item.name }}"
+    version: master
+  loop:
+    - name: zsh-autosuggestions
+      repo: https://github.com/zsh-users/zsh-autosuggestions
+    - name: zsh-syntax-highlighting
+      repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    - name: zsh-completions
+      repo: https://github.com/zsh-users/zsh-completions
+
+- name: Copy shell config
+  ansible.builtin.copy:
+    src: "{{ config_repo_root }}/dotfiles/.zshrc"
+    dest: "{{ config_user_home }}/.zshrc"
+    mode: "0644"
+
+- name: Copy Starship config
+  ansible.builtin.copy:
+    src: "{{ config_repo_root }}/dotfiles/starship.toml"
+    dest: "{{ config_user_home }}/.config/starship.toml"
+    mode: "0644"
+
+- name: Copy custom Oh My Zsh files
+  ansible.builtin.copy:
+    src: "{{ config_repo_root }}/dotfiles/custom/"
+    dest: "{{ config_user_home }}/.oh-my-zsh/custom/"
+    mode: preserve
+
+- name: Install Starship
+  ansible.builtin.shell: curl -sS https://starship.rs/install.sh | sh -s -- -y -b "{{ config_user_home }}/.local/bin"
+  args:
+    creates: "{{ config_user_home }}/.local/bin/starship"
+
+- name: Set default shell to Zsh
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    shell: /usr/bin/zsh
+  become: true
+  when: config_set_default_shell | default(false)

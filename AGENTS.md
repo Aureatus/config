@@ -9,6 +9,15 @@ config/
 ├── README.md
 ├── AGENTS.md
 ├── setup.sh
+├── ansible/
+│   ├── ansible.cfg
+│   ├── inventory/
+│   ├── playbooks/
+│   └── roles/
+├── cli/
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── src/
 ├── mise.toml
 ├── devbox.json
 ├── opencode.json                    # Symlink to ai/agents/opencode/opencode.json
@@ -18,6 +27,7 @@ config/
 │   │   │   ├── product.md
 │   │   │   ├── engineering.md
 │   │   │   ├── design.md
+│   │   │   ├── developer-operability.md
 │   │   │   └── testing.md
 │   │   ├── skills/
 │   │   │   ├── manifest.ts
@@ -38,19 +48,25 @@ config/
 │   │   └── ghostty/config
 │   └── manage.sh
 ├── system/
+    ├── cloud-init/
     ├── packages/apt.txt
     ├── portable-strategy.md
     ├── state/
     ├── vm/
     │   ├── .gitignore
-    │   └── desktop-test.env.example
+    │   ├── desktop-test.env.example
+    │   └── presets/
     ├── reinstall-checklist.md
     ├── vm-testing.md
     └── scripts/
+        ├── build-autoinstall-seed.sh
         ├── create-test-vm.sh
+        ├── fix-kvm-access.sh
         ├── install-mise.sh
         ├── install-devbox.sh
+        ├── list-vm-presets.sh
         ├── test-portable-env.sh
+        ├── resolve-vm-iso.sh
         ├── vmctl.sh
         ├── capture-state.sh
         ├── install-packages.sh
@@ -106,21 +122,52 @@ System shell and CLI tool configurations:
 ## Portable Tooling
 
 - `mise.toml` is the pinned runtime source of truth for shared machine and repo tooling
-- `devbox.json` defines the optional repo-local portable shell layer
-- `templates/devbox/` is the copyable starter for future repos
+- `devbox.json` defines the optional repo-local portable shell layer when `mise` alone is not enough
+- `templates/devbox/` is the copyable starter for future repos that truly need that extra layer
+
+## Ansible
+
+Shared machine configuration should prefer Ansible over custom shell logic:
+
+- `ansible/playbooks/desktop.yml` is the preferred local desktop path
+- `ansible/playbooks/server.yml` is the preferred VPS/server path
+- `setup.sh` remains a thin convenience wrapper around these playbooks
+- TypeScript is appropriate for repo-specific generators or validation, not as the main machine config engine
+
+## Operator CLI
+
+`cli/` is the Bun + TypeScript wrapper layer for operator-facing commands:
+
+- `bun run src/index.ts tui` launches the OpenTUI picker
+- `bun run src/index.ts <command-id>` runs a wrapper command directly
+- `bun run install-local` builds and installs the standalone `forge` executable into `~/.local/bin/`
+- the shell scripts remain the backend implementation for now, but `cli/` is the preferred interactive entrypoint
 
 ## System Bootstrap (`system/`)
 
 Machine-level reinstall helpers:
 
 - `packages/apt.txt` is the curated base package list for apt-based systems
+- `cloud-init/` holds first-boot examples for VPS and cloud-image based machines
 - `state/` contains generated package inventory snapshots produced by `./setup.sh capture`
 - `reinstall-checklist.md` tracks the manual backups and restore steps that should not live in git
 - `vm-testing.md` is the full-DE validation flow using a VM and snapshots
 - `vm/desktop-test.env.example` is the config-driven VM definition starter
+- `vm/presets/*.env` are named distro defaults for common VM targets
+- `resolve-vm-iso.sh` turns `ISO_URL` into a cached local ISO path when you do not want to manage local ISO files yourself, using libvirt-safe paths by default
+- `build-autoinstall-seed.sh` renders Ubuntu autoinstall inputs for zero-click guest installs
 - `scripts/backup-kde-config.sh` writes archives outside the repo so desktop backups stay out of version control
-- `create-test-vm.sh` and `vmctl.sh` provide the CLI-driven VM lifecycle helpers
-- `install-mise.sh`, `install-devbox.sh`, and `test-portable-env.sh` manage the portable tooling layer and its safe-test path
+- `list-vm-presets.sh` exposes the available named presets from the CLI
+- `fix-kvm-access.sh` repairs host-side KVM group access for libvirt when Pop or custom udev permissions break it
+- `create-test-vm.sh` and `vmctl.sh` provide the CLI-driven VM lifecycle helpers; `vmctl.sh up` is the quickest path because it creates missing guests and starts stopped ones before opening the viewer
+- `install-mise.sh` is the primary runtime bootstrap, `install-devbox.sh` is optional, and `test-portable-env.sh` manages the safe-test path
+
+VM preset guidance:
+
+- `ubuntu-24.04-server-smoke` is the fast confidence-check path
+- `ubuntu-24.04-server-kde` is the heavier full desktop validation path
+- `./setup.sh vm-smoke` is the simplest way to launch the smoke path without editing a VM config file
+- `./setup.sh vm-smoke-reset` and `./setup.sh vm-desktop-reset` are the simplest ways to rebuild the VMs from current repo state
 
 Important rules:
 
@@ -142,6 +189,23 @@ Important rules:
 ```bash
 ./setup.sh bootstrap
 ./setup.sh dev-env
+./setup.sh devbox  # optional
+./setup.sh vm-desktop
+./setup.sh vm-desktop-reset
+./setup.sh vm-smoke
+./setup.sh vm-smoke-reset
+```
+
+### Shared Desktop Config
+
+```bash
+./setup.sh desktop-config
+```
+
+### Shared Server Config
+
+```bash
+./setup.sh server-config ansible/inventory/hosts.local.ini
 ```
 
 ### Safe Portable Test
@@ -170,7 +234,9 @@ Important rules:
 - User shell and terminal configuration belongs in `dotfiles/`
 - Machine bootstrap state and reinstall helpers belong in `system/`
 - Shared runtime pins live in `mise.toml`
-- Optional repo-local shell wrappers live in `devbox.json` and `templates/devbox/`
+- Optional repo-local shell wrappers live in `devbox.json` and `templates/devbox/` only when a repo needs more than `mise`
+- Shared machine config lives in `ansible/`
+- First-boot remote bootstrap examples live in `system/cloud-init/`
 
 ## Contributing
 

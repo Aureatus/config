@@ -1,0 +1,23 @@
+{
+  "name": "@aureatus/forge",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "forge": "src/index.ts"
+  },
+  "scripts": {
+    "build": "bun build --compile --outfile dist/forge src/index.ts",
+    "dev": "bun run src/index.ts",
+    "install-local": "bun run src/install.ts",
+    "tui": "bun run src/index.ts tui",
+    "list": "bun run src/index.ts list",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@opentui/core": "^0.1.95"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.9.2"
+  }
+}

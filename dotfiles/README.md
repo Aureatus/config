@@ -56,7 +56,7 @@ This directory is the canonical home for these dotfiles.
 
 1. Clone this repo
 2. Run `./setup.sh dotfiles` from the repo root
-3. Run `./setup.sh dev-env` to install `mise`, `devbox`, and the pinned runtimes
+3. Run `./setup.sh dev-env` to install `mise` and the pinned runtimes
 4. Run `chsh -s "$(command -v zsh)"` if your login shell is still not Zsh
 5. Restart terminal
 

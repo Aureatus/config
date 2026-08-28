@@ -1,0 +1,54 @@
+---
+- name: Copy global mise config
+  ansible.builtin.copy:
+    src: "{{ config_repo_root }}/mise.toml"
+    dest: "{{ config_user_home }}/.config/mise/config.toml"
+    mode: "0644"
+
+- name: Install mise
+  ansible.builtin.shell: curl https://mise.run | sh
+  args:
+    creates: "{{ config_user_home }}/.local/bin/mise"
+
+- name: Check for repo-local mise config on target
+  ansible.builtin.stat:
+    path: "{{ config_repo_root }}/mise.toml"
+  register: config_repo_mise_file
+
+- name: Trust repo-local mise config when present
+  ansible.builtin.command: "{{ config_user_home }}/.local/bin/mise trust -y {{ config_repo_root }}/mise.toml"
+  environment:
+    PATH: "{{ config_user_home }}/.local/bin:{{ ansible_env.PATH }}"
+  changed_when: false
+  when: config_repo_mise_file.stat.exists
+
+- name: Trust installed global mise config
+  ansible.builtin.command: "{{ config_user_home }}/.local/bin/mise trust -y {{ config_user_home }}/.config/mise/config.toml"
+  environment:
+    PATH: "{{ config_user_home }}/.local/bin:{{ ansible_env.PATH }}"
+  changed_when: false
+  failed_when: false
+
+- name: Install configured mise runtimes
+  ansible.builtin.command: "{{ config_user_home }}/.local/bin/mise install"
+  args:
+    chdir: "{{ config_repo_root }}"
+  environment:
+    PATH: "{{ config_user_home }}/.local/bin:{{ ansible_env.PATH }}"
+  when:
+    - config_install_mise_runtimes | default(true)
+    - config_repo_mise_file.stat.exists
+
+- name: Install configured global mise runtimes without repo checkout
+  ansible.builtin.command: "{{ config_user_home }}/.local/bin/mise install"
+  environment:
+    PATH: "{{ config_user_home }}/.local/bin:{{ ansible_env.PATH }}"
+  when:
+    - config_install_mise_runtimes | default(true)
+    - not config_repo_mise_file.stat.exists
+
+- name: Install Devbox
+  ansible.builtin.shell: curl -fsSL https://get.jetify.com/devbox | bash
+  args:
+    creates: "{{ config_user_home }}/.local/bin/devbox"
+  when: config_install_devbox | default(false)

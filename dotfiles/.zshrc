@@ -156,4 +156,4 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # opencode
-export PATH=/home/aureatus/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"

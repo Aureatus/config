@@ -26,8 +26,8 @@ Use this before and after reinstalling Linux.
 
 - Restore SSH and GPG keys before cloning private repos
 - Clone this repo: `git clone git@github.com:Aureatus/config.git ~/dev/config`
-- Run `./setup.sh bootstrap` from `~/dev/config`
-- Run `./setup.sh dev-env` to install `mise`, install the pinned runtimes, and install `devbox`
+- Run `./setup.sh bootstrap` from `~/dev/config` for the preferred shared local-machine path
+- Or use `./setup.sh desktop-config` directly if you want the explicit Ansible entrypoint
 - Restore non-repo config and app data from your backups
 - Restore KDE via `konsave -a <backup-name>` or unpack the archive from `./setup.sh backup-kde`
 
@@ -37,7 +37,6 @@ Use this before and after reinstalling Linux.
 - `starship --version`
 - `git --version`
 - `mise ls`
-- `devbox version`
 - `gh auth status`
 - `opencode --version`
 - `flatpak list`

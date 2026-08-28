@@ -1,0 +1,36 @@
+---
+- name: Configure desktop machine from config repo
+  hosts: local
+  gather_facts: true
+  vars:
+    config_repo_root: "{{ playbook_dir }}/../.."
+    config_user_home: "{{ ansible_env.HOME }}"
+    config_package_lines: "{{ lookup('file', config_repo_root + '/system/packages/apt.txt').splitlines() }}"
+    config_package_list: >-
+      {{
+        config_package_lines
+        | map('regex_replace', '#.*$', '')
+        | map('trim')
+        | reject('equalto', '')
+        | list
+      }}
+    config_flatpak_app_lines: "{{ lookup('file', config_repo_root + '/system/state/flatpak-apps.txt', errors='ignore').splitlines() }}"
+    config_flatpak_app_list: >-
+      {{
+        config_flatpak_app_lines
+        | map('regex_replace', '#.*$', '')
+        | map('trim')
+        | reject('equalto', '')
+        | list
+      }}
+    config_install_packages: true
+    config_install_flatpak_apps: true
+    config_install_devbox: false
+    config_install_terminal_configs: true
+    config_install_fonts: true
+    config_set_default_shell: true
+  roles:
+    - common
+    - user-config
+    - runtime
+    - desktop

@@ -1,0 +1,25 @@
+---
+- name: Install configured apt packages
+  ansible.builtin.apt:
+    name: "{{ config_package_list }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+  when:
+    - config_install_packages | default(true)
+    - ansible_os_family == 'Debian'
+
+- name: Ensure Flathub remote exists
+  ansible.builtin.command: flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+  changed_when: false
+  when:
+    - config_install_flatpak_apps | default(false)
+    - config_flatpak_app_list | default([]) | length > 0
+
+- name: Install configured Flatpak apps
+  ansible.builtin.command: flatpak install --user -y flathub {{ item }}
+  loop: "{{ config_flatpak_app_list | default([]) }}"
+  when:
+    - config_install_flatpak_apps | default(false)
+    - config_flatpak_app_list | default([]) | length > 0

@@ -1,0 +1,47 @@
+---
+- name: Ensure terminal config directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "{{ config_user_home }}/.config/cosmic-term"
+    - "{{ config_user_home }}/.config/ghostty"
+    - "{{ config_user_home }}/.local/share/fonts"
+  when: config_install_terminal_configs | default(true)
+
+- name: Copy Cosmic Terminal config
+  ansible.builtin.copy:
+    src: "{{ config_repo_root }}/dotfiles/config/cosmic-term/config.toml"
+    dest: "{{ config_user_home }}/.config/cosmic-term/config.toml"
+    mode: "0644"
+  when: config_install_terminal_configs | default(true)
+
+- name: Copy Ghostty config
+  ansible.builtin.copy:
+    src: "{{ config_repo_root }}/dotfiles/config/ghostty/config"
+    dest: "{{ config_user_home }}/.config/ghostty/config"
+    mode: "0644"
+  when: config_install_terminal_configs | default(true)
+
+- name: Download JetBrains Mono Nerd Font archive
+  ansible.builtin.get_url:
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.tar.xz
+    dest: "{{ config_user_home }}/.local/share/fonts/JetBrainsMono.tar.xz"
+    mode: "0644"
+  when: config_install_fonts | default(true)
+
+- name: Extract JetBrains Mono Nerd Font
+  ansible.builtin.unarchive:
+    src: "{{ config_user_home }}/.local/share/fonts/JetBrainsMono.tar.xz"
+    dest: "{{ config_user_home }}/.local/share/fonts"
+    remote_src: true
+    creates: "{{ config_user_home }}/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf"
+  when: config_install_fonts | default(true)
+  notify: Refresh font cache
+
+- name: Remove JetBrains Mono archive after extraction
+  ansible.builtin.file:
+    path: "{{ config_user_home }}/.local/share/fonts/JetBrainsMono.tar.xz"
+    state: absent
+  when: config_install_fonts | default(true)
